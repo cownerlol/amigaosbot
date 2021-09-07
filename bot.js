@@ -11,22 +11,15 @@ const prefix = '!'
 const apikey = 'LindowApi'
 async function iniciar () { 
         const client = new WAConnection()
-//Aquí el "client" lo pueden cambiar a su gusto. Pero si cambian, tendrán que cambiar todos los "client" por el cambio que hicieron.
         client.logger.level = 'warn'
 
-//llamar al código QR
         client.on('qr', () => {
         })
-
-//crear un archivo Json para guardar información: ID del cliente, Token y Keys del cliente y del SERVER.
         fs.existsSync('./session.json') && client.loadAuthInfo('./session.json')
-
-//Conectando o reconectando
         client.on('connecting', () => {
         console.log('Conectando')
         })
 
-//La conexión fue en éxito:ok_hand_tone1:
         client.on('open', () => {
         console.log('Conectado exitosamente :D')
         })
