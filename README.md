@@ -1,0 +1,2 @@
+# amigaosbot
+hola erik
