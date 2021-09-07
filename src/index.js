@@ -22,21 +22,21 @@ const apikey = 'LindowApi';
 
 async function makeMP4(gifBuffer, callback) {
   return new Promise((resolve, reject) => {
-    fs.writeFile('input.gif', gifBuffer, (err) => {
-      ffmpeg('input.gif').outputOptions([
+    fs.writeFile('tmp/input.gif', gifBuffer, (err) => {
+      ffmpeg('tmp/input.gif').outputOptions([
         '-movflags faststart',
         '-pix_fmt yuv420p',
         '-vf scale=trunc(iw/2)*2:trunc(ih/2)*2',
       ])
         .inputFormat('gif')
         .on('end', () => {
-          fs.readFile('output.mp4', (err, mp4Buffer) => {
+          fs.readFile('tmp/output.mp4', (err, mp4Buffer) => {
             fs.unlink('/tmp/src', (err) => {});
             fs.unlink('/tmp/dst', (err) => {});
             resolve(mp4Buffer);
           });
         })
-        .save('output.mp4');
+        .save('tmp/output.mp4');
     });
   });
 }
