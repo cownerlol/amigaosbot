@@ -1,0 +1,27 @@
+{
+  "name": "koner",
+  "version": "0.0.1",
+  "description": "lol",
+  "main": "bot.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "@adiwajshing/baileys": "^3.4.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "axios": "^0.21.1",
+    "node-fetch": "^2.6.1",
+    "cfonts": "^2.9.0",
+    "lolis.life": "^4.0.0",
+    "spinnies": "^0.5.1",
+    "g-i-s": "^2.1.6",
+    "google-it": "^1.6.2",
+    "multistream": "^4.1.0",
+    "request": "^2.88.2",
+    "fake-useragent": "^1.0.1",
+    "yt-search": "^2.7.5"
+  }
+}
