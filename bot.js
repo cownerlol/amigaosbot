@@ -226,14 +226,9 @@ switch (command) {
                 addFilter(from)
                         break
         case 'h':
-                ranp = getRandom('.gif')
-                rano = getRandom('.mp4')
-                anu = await getJson('https://nekos.life/api/hug', {method: 'get'})
-                exec(`wget ${anu.result} -O ${ranp} && ffmpeg -i ${ranp} -vcodec libwebp -filter:v fps=fps=15 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${rano}`, (err) => {
-                buffer = fs.readFileSync(rano)
-                client.sendVideoAsGif(from, buffer, video, {quoted: koner})
-                fs.unlinkSync(rano)
-                })
+                waifu = await getJson('https://nekos.life/api/hug')
+                sendFileFromUrl(waifu.url, video, {quoted: koner, mimetype: 'image/gif'})
+                addFilter(from)
                         break
         //Busqueda
         case 'google':
