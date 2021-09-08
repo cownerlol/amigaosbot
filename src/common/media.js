@@ -2,24 +2,28 @@ import { MessageType, Mimetype } from '@adiwajshing/baileys';
 import ffmpeg from 'fluent-ffmpeg';
 import fs from 'fs';
 import { getBuffer } from '../lib/help';
+import { randomString } from './files';
 
 export async function gifToMp4(gifBuffer) {
+  const inputName = `${randomString()}.gif`;
+  const outputName = `${randomString()}.mp4`;
+
   return new Promise((resolve) => {
-    fs.writeFile('tmp/input.gif', gifBuffer, () => {
-      ffmpeg('tmp/input.gif').outputOptions([
+    fs.writeFile(`tmp/${inputName}`, gifBuffer, () => {
+      ffmpeg(`tmp/${inputName}`).outputOptions([
         '-movflags faststart',
         '-pix_fmt yuv420p',
         '-vf scale=trunc(iw/2)*2:trunc(ih/2)*2',
       ])
         .inputFormat('gif')
         .on('end', () => {
-          fs.readFile('tmp/output.mp4', (err, mp4Buffer) => {
-            fs.unlink('/tmp/src', () => {});
-            fs.unlink('/tmp/dst', () => {});
+          fs.readFile(`tmp/${outputName}`, (err, mp4Buffer) => {
             resolve(mp4Buffer);
+            fs.unlink(`tmp/${inputName}`, () => {});
+            fs.unlink(`tmp/${outputName}`, () => {});
           });
         })
-        .save('tmp/output.mp4');
+        .save(`tmp/${outputName}`);
     });
   });
 }
