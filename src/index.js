@@ -22,6 +22,8 @@ let res1;
 let pr21;
 let F;
 let ran;
+let dtt;
+let ranm;
 
 const prefix = '!';
 const apikey = 'LindowApi';
@@ -228,6 +230,22 @@ async function iniciar() {
           const attp1 = await getBuffer(`https://api.xteam.xyz/attp?file&text=${teks}`);
           client.sendMessage(from, attp1, sticker, { quoted: koner, contextInfo: { forwardingScore: 999, isForwarded: true } });
           break;
+        case 'tts':
+          if (args.length < 1) return client.sendMessage(from, `Debes usar el comando correctamente:\n${prefix}tts (lengua) (texto)\nEjemplo: ${prefix}tts tiao7\n\nUse ${prefix}ts para enumerar todos los idiomas`, text, { quoted: koner });
+          const gtts = require('./lib/gtts')(args[0]);
+          if (args.length < 2) return client.sendMessage(from, 'Y el texto?', text, { quoted: koner });
+          dtt = body.slice(8);
+          ranm = getRandom('.mp3');
+          dtt.length > 800
+            ? reply('¿Quieres Escribir La Biblia?')
+            : gtts.save(ranm, dtt, () => {
+              client.sendMessage(from, fs.readFileSync(ranm), audio, { quoted: koner, mimetype: 'audio/mp4', ptt: true });
+              fs.unlinkSync(ranm);
+            });
+          break;
+        case 'ts':
+          client.sendMessage(from, "af: Afrikaans\nsq: Albanian\nar: Arabic\nhy: Armenian\nca: Catalan\nzh: Chinese\nzh-cn: Chinese (Mandarin/China)\nzh-tw: Chinese (Mandarin/Taiwan)\nzh-yue: Chinese (Cantonese)\nhr: Croatian\ncs: Czech\nda: Danish\nnl: Dutch\nen: English\nen-au: English (Australia)\nen-uk: English (United Kingdom)\nen-us: English (United States)\neo: Esperanto\nfi: Finnish\nfr: French\nde: German\nel: Greek\nht: Haitian Creole\nhi: Hindi\nhu: Hungarian\nis: Icelandic\nid: Indonesian\nit: Italian\nja: Japanese\nko: Korean\nla: Latin\nlv: Latvian\nmk: Macedonian\nno: Norwegian\npl: Polish\npt: Portuguese\npt-br: Portuguese (Brazil)\nro: Romanian\nru: Russian\nsr: Serbian\nsk: Slovak\nes: Spanish\nes-es: Spanish (Spain)\nes-us: Spanish (United States)\nsw: Swahili\nsv: Swedish\nta: Tamil\nth: Thai\ntr: Turkish\nvi: Vietnamese\ncy: Welsh", text, {quoted: koner})
+
         // NSFW
         case 'trap':
           waifu = await getJson('https://nekos.life/api/v2/img/trap');

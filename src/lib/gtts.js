@@ -4,10 +4,9 @@ const async = require('async');
 const fs = require('fs');
 const MultiStream = require('multistream');
 const fakeUa = require('fake-useragent');
-const tiktod = require('')
 
 const GOOGLE_TTS_URL = 'http://translate.google.com/translate_tts';
-const MAX_CHARS = 100;
+const MAX_CHARS = 800;
 const LANGUAGES = {
   'af': 'Afrikaans',
   'sq': 'Albanian',
