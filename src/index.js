@@ -7,6 +7,7 @@ const fs = require('fs');
 const { takeCoverage, getHeapSnapshot } = require('v8');
 const { get, ClientRequest } = require('http');
 const { Cipher } = require('crypto');
+const { sendGif } = require('./common/media');
 
 let chats;
 let budy;
@@ -19,27 +20,6 @@ let hasil;
 
 const prefix = '!';
 const apikey = 'LindowApi';
-
-async function makeMP4(gifBuffer, callback) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile('tmp/input.gif', gifBuffer, (err) => {
-      ffmpeg('tmp/input.gif').outputOptions([
-        '-movflags faststart',
-        '-pix_fmt yuv420p',
-        '-vf scale=trunc(iw/2)*2:trunc(ih/2)*2',
-      ])
-        .inputFormat('gif')
-        .on('end', () => {
-          fs.readFile('tmp/output.mp4', (err, mp4Buffer) => {
-            fs.unlink('/tmp/src', (err) => {});
-            fs.unlink('/tmp/dst', (err) => {});
-            resolve(mp4Buffer);
-          });
-        })
-        .save('tmp/output.mp4');
-    });
-  });
-}
 
 async function iniciar() {
   const client = new WAConnection();
@@ -111,13 +91,9 @@ async function iniciar() {
       const conts = koner.key.fromMe ? client.user.jid : client.contacts[sender] || { notify: jid.replace(/@.+/, '') };
       const pushname = koner.key.fromMe ? client.user.name : conts.notify || conts.vname || conts.name || '-';
       const { getJson } = help;
-      const sendUrlFile = async (url, type, options) => {
-        await client.sendMessage(from, { url }, MessageType.video);
-      };
       const sendFileFromUrl = async (link, type, options) => {
         hasil = await getBuffer(link);
-        const buffer = await makeMP4(hasil);
-        client.sendMessage(from, buffer, type, options).catch((e) => {
+        client.sendMessage(from, hasil, type, options).catch((e) => {
           fetch(link).then((hasil) => {
             client.sendMessage(from, hasil, type, options).catch((e) => {
               client.sendMessage(from, { url: link }, type, options).catch((e) => {
@@ -183,6 +159,7 @@ async function iniciar() {
       const googleImg = require('g-i-s');
       const yts = require('yt-search');
       const { y2mateA, y2mateV } = require('./lib/y2mate.js');
+      let result = null;
       switch (command) {
         // Media
         case 'sticker':
@@ -258,13 +235,13 @@ async function iniciar() {
           addFilter(from);
           break;
         case 'hentai':
-          waifu = await getJson('https://nekos.life/api/v2/img/hentai');
-          sendFileFromUrl(waifu.url, image, { quoted: koner, sendEphemeral: true });
+          result = await getJson('https://nekos.life/api/v2/img/Random_hentai_gif');
+          await sendGif(client, from, koner, result.url, { sendEphemeral: true });
           addFilter(from);
           break;
         case 'h':
-          waifu = await getJson('https://nekos.life/api/v2/img/hug');
-          sendFileFromUrl(waifu.url, MessageType.video, { quoted: koner, mimetype: Mimetype.gif });
+          result = await getJson('https://nekos.life/api/v2/img/hug');
+          await sendGif(client, from, koner, result.url);
           addFilter(from);
           break;
         // Busqueda

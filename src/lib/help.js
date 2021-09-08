@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const axios = require('axios');
 
-exports.getBuffer = async (url, options) => {
+export async function getBuffer(url, options) {
   try {
     options || {};
     const res = await axios({
@@ -18,7 +18,7 @@ exports.getBuffer = async (url, options) => {
   } catch (e) {
     console.log(`Error : ${e}`);
   }
-};
+}
 
 exports.postBuffer = async (url, formdata) => {
   try {
