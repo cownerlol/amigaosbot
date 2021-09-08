@@ -84,15 +84,12 @@ export default class Client {
     }
   }
 
-  executeCommand =({
-    cmd, args, messageInfo, from,
-  }) => {
+  executeCommand =(msgData) => {
+    const { cmd } = msgData;
     const callback = this.commands.get(cmd);
 
     if (callback) {
-      callback({
-        cmd, args, connection: this.connection, messageInfo, from,
-      });
+      callback(msgData);
     } else {
       // TODO: Handle not found command
     }
@@ -183,7 +180,7 @@ export default class Client {
   }
 
   /**
-   * @param {proto.IMessage} message
+   * @param {import('@adiwajshing/baileys').proto.IMessage} message
    * @param {string} type
    */
   mapMessageText = (message, type) => {
@@ -192,9 +189,9 @@ export default class Client {
 
     if (!mappedMessage) {
       result = '';
-    } if (mappedMessage.caption && mappedMessage.caption.trim().length > 0) {
+    } else if (mappedMessage.caption && mappedMessage.caption.trim().length > 0) {
       result = mappedMessage.caption;
-    } if (mappedMessage.text && mappedMessage.text.trim().length > 0) {
+    } else if (mappedMessage.text && mappedMessage.text.trim().length > 0) {
       result = mappedMessage.text;
     } else {
       result = mappedMessage;

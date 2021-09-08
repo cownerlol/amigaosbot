@@ -1,6 +1,8 @@
 import Client from './Client';
 import hentaiCommand from './commands/hentai';
+import hugCommand from './commands/hug';
 
 const client = new Client();
-client.addCommand(['h', 'hentai'], hentaiCommand);
+client.addCommand(['hentai'], hentaiCommand);
+client.addCommand(['h', 'hug'], hugCommand);
 client.connect();
