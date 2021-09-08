@@ -45,7 +45,7 @@ const randomBytes = (length) => Crypto.randomBytes(length);
 const generateMessageID = () => randomBytes(10).toString('hex').toUpperCase();
 
 const getGroupAdmins = (participants) => {
-  admins = [];
+let admins = [];
   for (const i of participants) {
     i.isAdmin ? admins.push(i.jid) : '';
   }

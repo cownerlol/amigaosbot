@@ -17,6 +17,11 @@ let mess;
 let typeMessage;
 let waifu;
 let hasil;
+let res;
+let res1;
+let pr21;
+let F;
+let ran;
 
 const prefix = '!';
 const apikey = 'LindowApi';
@@ -230,8 +235,8 @@ async function iniciar() {
           addFilter(from);
           break;
         case 'neko':
-          waifu = await getJson('https://nekos.life/api/v2/img/lewd');
-          sendFileFromUrl(waifu.url, image, { quoted: koner, sendEphemeral: true });
+          result = await getJson('https://nekos.life/api/v2/img/nsfw_neko_gif');
+          await sendGif(client, from, koner, result.url, { sendEphemeral: true });
           addFilter(from);
           break;
         case 'hentai':
@@ -239,9 +244,44 @@ async function iniciar() {
           await sendGif(client, from, koner, result.url, { sendEphemeral: true });
           addFilter(from);
           break;
-        case 'h':
+        case 'hug':
           result = await getJson('https://nekos.life/api/v2/img/hug');
           await sendGif(client, from, koner, result.url);
+          addFilter(from);
+          break;
+        case 'cum':
+          result = await getJson('https://nekos.life/api/v2/img/cum');
+          await sendGif(client, from, koner, result.url);
+          addFilter(from);
+          break;
+        case 'slap':
+          result = await getJson('https://nekos.life/api/v2/img/slap');
+          await sendGif(client, from, koner, result.url);
+          addFilter(from);
+          break;
+        case 'pat':
+          result = await getJson('https://nekos.life/api/v2/img/pat');
+          await sendGif(client, from, koner, result.url);
+          addFilter(from);
+          break;
+        case 'baka':
+          result = await getJson('https://nekos.life/api/v2/img/baka');
+          await sendGif(client, from, koner, result.url);
+          addFilter(from);
+          break;
+        case 'kiss':
+          result = await getJson('https://nekos.life/api/v2/img/kiss');
+          await sendGif(client, from, koner, result.url);
+          addFilter(from);
+          break;
+        case 'anal':
+          result = await getJson('https://nekos.life/api/v2/img/anal');
+          await sendGif(client, from, koner, result.url, { sendEphemeral: true });
+          addFilter(from);
+          break;
+        case 'fuck':
+          result = await getJson('https://nekos.life/api/v2/img/classic');
+          await sendGif(client, from, koner, result.url, { sendEphemeral: true });
           addFilter(from);
           break;
         // Busqueda
@@ -264,7 +304,7 @@ async function iniciar() {
         case 'imagenes':
           if (args.length < 1) return reply('Qué deseas buscar?');
           reply(`Por favor, espera un mientras busco imagenes de ${args.join(' ')}`);
-          ggimg = args.join(' ');
+          const ggimg = args.join(' ');
           res = await googleImg(ggimg, google);
           function google(error, result) {
             if (error) { return reply('Intentalo de nuevo!'); }
