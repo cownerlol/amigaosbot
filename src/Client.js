@@ -120,7 +120,7 @@ export default class Client {
     let cmd = null; let
       args = null;
 
-    if (messageText.startsWith(this.prefix)) {
+    if (typeof messageText === 'string' && messageText.startsWith(this.prefix)) {
       const textWithoutPrefix = messageText.slice(1).trim();
       const textParts = textWithoutPrefix.split(' ');
 
@@ -195,6 +195,10 @@ export default class Client {
       result = mappedMessage.text;
     } else {
       result = mappedMessage;
+    }
+
+    if (result == null) {
+      result = '';
     }
 
     return typeof result === 'string' ? result.trim() : result;

@@ -8,5 +8,6 @@ const defaultConfig = {
 };
 
 export default {
+  common: axios.create({ ...defaultConfig }),
   nekoslife: axios.create({ baseURL: 'https://nekos.life/api/v2/img', ...defaultConfig }),
 };
