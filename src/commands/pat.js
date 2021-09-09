@@ -9,15 +9,15 @@ import { addFilter } from '../lib/antispam';
  */
 
 /** @param {Command} args */
-export default async function hugCommand({
+export default async function patCommand({
   messageInfo, from, connection, sentMessage, sender,
 }) {
   const mentionedIds = [sender, ...sentMessage.extendedTextMessage.contextInfo.mentionedJid];
   const mentionedNumbers = mentionedIds.map((id) => id.split('@')[0]);
 
-  const caption = `@${mentionedNumbers[0]} abraza a @${mentionedNumbers[1]}, ¡que lindo!`;
+  const caption = `@${mentionedNumbers[0]} acarició a @${mentionedNumbers[1]} uwu`;
 
-  const result = await api.nekoslife.get('hug');
+  const result = await api.nekoslife.get('pat');
   const options = { sendEphemeral: true, contextInfo: { mentionedJid: mentionedIds }, caption };
   if (result.data) {
     await sendGif(connection, from, messageInfo, result.data.url, options);
