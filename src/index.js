@@ -19,7 +19,7 @@ import fabriMedia from './commands/fabri';
 import woretiMedia from './commands/woreti';
 import attpCommand from './commands/attp';
 import menuList from './commands/menu';
-import ulStats from './commands/updatedleaderboard';
+import ulStats from './commands/ulStats';
 
 const client = new Client();
 // Roleplay

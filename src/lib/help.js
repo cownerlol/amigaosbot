@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
-const axios = require('axios');
+import fetch from 'node-fetch';
+import axios from 'axios';
 
 export async function getBuffer(url, options) {
   try {
@@ -20,7 +20,7 @@ export async function getBuffer(url, options) {
   }
 }
 
-exports.postBuffer = async (url, formdata) => {
+export async function postBuffer(url, formdata) {
   try {
     options = {
       method: 'POST',
@@ -31,9 +31,9 @@ exports.postBuffer = async (url, formdata) => {
   } catch (e) {
     throw e;
   }
-};
+}
 
-exports.getJson = async (url) => {
+export async function getJson(url) {
   try {
     const res = await fetch(url, {
       headers: {
@@ -45,9 +45,9 @@ exports.getJson = async (url) => {
   } catch (e) {
     throw e;
   }
-};
+}
 
-exports.postJson = async (url, formdata) => {
+export async function postJson(url, formdata) {
   try {
     options = {
       method: 'POST',
@@ -58,8 +58,8 @@ exports.postJson = async (url, formdata) => {
   } catch (e) {
     throw e;
   }
-};
+}
 
-exports.getRandomExt = (ext) => `${Math.floor(Math.random() * 10000)}${ext}`;
+export const getRandomExt = (ext) => `${Math.floor(Math.random() * 10000)}${ext}`;
 
-exports.sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));

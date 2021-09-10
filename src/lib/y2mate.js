@@ -1,8 +1,7 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
+import cheerio from 'cheerio';
 
-const cheerio = require('cheerio');
-
-const y2mateV = async (yutub) => {
+export const y2mateV = async (yutub) => {
   function post(url, formdata) {
     return fetch(url, {
 
@@ -90,7 +89,7 @@ const y2mateV = async (yutub) => {
   return hasil;
 };
 
-const y2mateA = async (yutub) => {
+export const y2mateA = async (yutub) => {
   function post(url, formdata) {
     return fetch(url, {
 
@@ -177,5 +176,3 @@ const y2mateA = async (yutub) => {
 
   return hasil;
 };
-
-module.exports = { y2mateV, y2mateA };
