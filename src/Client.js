@@ -164,6 +164,7 @@ export default class Client {
       senderNumber,
       contacts,
       pushname,
+      messageInfo,
       messageJson,
       type,
       sentMessage,

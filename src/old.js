@@ -162,61 +162,7 @@ async function iniciar() {
       let result = null;
       switch (command) {
         // Media
-        case 'sticker':
-        case 's':
-        case 'stiker':
-        case 'stickee':
-          if ((isMedia && !koner.message.videoMessage || isQuotedImage) && args.length == 0) {
-            const F = body.slice(6);
-            const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(koner).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : koner;
-            const media = await client.downloadAndSaveMediaMessage(encmedia);
-            const ran = '666.webp';
-            await ffmpeg(`./${media}`)
-              .input(media)
-              .on('start', (cmd) => {
-                console.log(`Started : ${cmd}`);
-              })
-              .on('error', (err) => {
-                console.log(`Error : ${err}`);
-                fs.unlinkSync(media);
-                reply('error');
-              })
-              .on('end', () => {
-                console.log('Finish');
-                client.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, { quoted: koner });
-                fs.unlinkSync(media);
-                fs.unlinkSync(ran);
-              })
-              .addOutputOptions(['-vcodec', 'libwebp', '-vf', 'scale=\'min(320,iw)\':min\'(320,ih)\':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse'])
-              .toFormat('webp')
-              .save(ran);
-          } else if ((isMedia && koner.message.videoMessage.seconds < 11 || isQuotedVideo && koner.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
-            const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(koner).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : koner;
-            const media = await client.downloadAndSaveMediaMessage(encmedia);
-            ran = '999.webp';
-            await ffmpeg(`./${media}`)
-              .inputFormat(media.split('.')[1])
-              .on('start', (cmd) => {
-                console.log(`Started : ${cmd}`);
-              })
-              .on('error', (err) => {
-                console.log(`Error : ${err}`);
-                fs.unlinkSync(media);
-                tipe = media.endsWith('.mp4') ? 'video' : 'gif';
-                reply('no se pudo convertir el pepee');
-              })
-              .on('end', () => {
-                console.log('Finish');
-                client.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, { quoted: koner });
-                fs.unlinkSync(media);
-                fs.unlinkSync(ran);
-              })
-              .addOutputOptions(['-vcodec', 'libwebp', '-vf', 'scale=\'min(320,iw)\':min\'(320,ih)\':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse'])
-              .toFormat('webp')
-              .save(ran);
-          } else {
-          }
-          break;
+    
         case 'attp':
           if (args.length < 1) return reply('y el texto?2');
           var teks = encodeURIComponent(args.join(' '));
